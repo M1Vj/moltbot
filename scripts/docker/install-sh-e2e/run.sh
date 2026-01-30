@@ -1,48 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-<<<<<<< HEAD
-INSTALL_URL="${MOLTBOT_INSTALL_URL:-https://molt.bot/install.sh}"
-MODELS_MODE="${MOLTBOT_E2E_MODELS:-both}" # both|openai|anthropic
-INSTALL_TAG="${MOLTBOT_INSTALL_TAG:-latest}"
-E2E_PREVIOUS_VERSION="${MOLTBOT_INSTALL_E2E_PREVIOUS:-}"
-SKIP_PREVIOUS="${MOLTBOT_INSTALL_E2E_SKIP_PREVIOUS:-0}"
-=======
 INSTALL_URL="${OPENCLAW_INSTALL_URL:-${CLAWDBOT_INSTALL_URL:-https://openclaw.bot/install.sh}}"
 MODELS_MODE="${OPENCLAW_E2E_MODELS:-${CLAWDBOT_E2E_MODELS:-both}}" # both|openai|anthropic
 INSTALL_TAG="${OPENCLAW_INSTALL_TAG:-${CLAWDBOT_INSTALL_TAG:-latest}}"
 E2E_PREVIOUS_VERSION="${OPENCLAW_INSTALL_E2E_PREVIOUS:-${CLAWDBOT_INSTALL_E2E_PREVIOUS:-}}"
 SKIP_PREVIOUS="${OPENCLAW_INSTALL_E2E_SKIP_PREVIOUS:-${CLAWDBOT_INSTALL_E2E_SKIP_PREVIOUS:-0}}"
->>>>>>> upstream/main
 OPENAI_API_KEY="${OPENAI_API_KEY:-}"
 ANTHROPIC_API_KEY="${ANTHROPIC_API_KEY:-}"
 ANTHROPIC_API_TOKEN="${ANTHROPIC_API_TOKEN:-}"
 
 if [[ "$MODELS_MODE" != "both" && "$MODELS_MODE" != "openai" && "$MODELS_MODE" != "anthropic" ]]; then
-<<<<<<< HEAD
-  echo "ERROR: MOLTBOT_E2E_MODELS must be one of: both|openai|anthropic" >&2
-=======
   echo "ERROR: OPENCLAW_E2E_MODELS must be one of: both|openai|anthropic" >&2
->>>>>>> upstream/main
   exit 2
 fi
 
 if [[ "$MODELS_MODE" == "both" ]]; then
   if [[ -z "$OPENAI_API_KEY" ]]; then
-<<<<<<< HEAD
-    echo "ERROR: MOLTBOT_E2E_MODELS=both requires OPENAI_API_KEY." >&2
-    exit 2
-  fi
-  if [[ -z "$ANTHROPIC_API_TOKEN" && -z "$ANTHROPIC_API_KEY" ]]; then
-    echo "ERROR: MOLTBOT_E2E_MODELS=both requires ANTHROPIC_API_TOKEN or ANTHROPIC_API_KEY." >&2
-    exit 2
-  fi
-elif [[ "$MODELS_MODE" == "openai" && -z "$OPENAI_API_KEY" ]]; then
-  echo "ERROR: MOLTBOT_E2E_MODELS=openai requires OPENAI_API_KEY." >&2
-  exit 2
-elif [[ "$MODELS_MODE" == "anthropic" && -z "$ANTHROPIC_API_TOKEN" && -z "$ANTHROPIC_API_KEY" ]]; then
-  echo "ERROR: MOLTBOT_E2E_MODELS=anthropic requires ANTHROPIC_API_TOKEN or ANTHROPIC_API_KEY." >&2
-=======
     echo "ERROR: OPENCLAW_E2E_MODELS=both requires OPENAI_API_KEY." >&2
     exit 2
   fi
@@ -55,7 +29,6 @@ elif [[ "$MODELS_MODE" == "openai" && -z "$OPENAI_API_KEY" ]]; then
   exit 2
 elif [[ "$MODELS_MODE" == "anthropic" && -z "$ANTHROPIC_API_TOKEN" && -z "$ANTHROPIC_API_KEY" ]]; then
   echo "ERROR: OPENCLAW_E2E_MODELS=anthropic requires ANTHROPIC_API_TOKEN or ANTHROPIC_API_KEY." >&2
->>>>>>> upstream/main
   exit 2
 fi
 
@@ -79,11 +52,7 @@ fi
 echo "expected=$EXPECTED_VERSION previous=$PREVIOUS_VERSION"
 
 if [[ "$SKIP_PREVIOUS" == "1" ]]; then
-<<<<<<< HEAD
-  echo "==> Skip preinstall previous (MOLTBOT_INSTALL_E2E_SKIP_PREVIOUS=1)"
-=======
   echo "==> Skip preinstall previous (OPENCLAW_INSTALL_E2E_SKIP_PREVIOUS=1)"
->>>>>>> upstream/main
 else
   echo "==> Preinstall previous (forces installer upgrade path; avoids read() prompt)"
   npm install -g "openclaw@${PREVIOUS_VERSION}"
@@ -91,15 +60,9 @@ fi
 
 echo "==> Run official installer one-liner"
 if [[ "$INSTALL_TAG" == "beta" ]]; then
-<<<<<<< HEAD
-  MOLTBOT_BETA=1 curl -fsSL "$INSTALL_URL" | bash
-elif [[ "$INSTALL_TAG" != "latest" ]]; then
-  MOLTBOT_VERSION="$INSTALL_TAG" curl -fsSL "$INSTALL_URL" | bash
-=======
   OPENCLAW_BETA=1 CLAWDBOT_BETA=1 curl -fsSL "$INSTALL_URL" | bash
 elif [[ "$INSTALL_TAG" != "latest" ]]; then
   OPENCLAW_VERSION="$INSTALL_TAG" CLAWDBOT_VERSION="$INSTALL_TAG" curl -fsSL "$INSTALL_URL" | bash
->>>>>>> upstream/main
 else
   curl -fsSL "$INSTALL_URL" | bash
 fi
@@ -453,11 +416,7 @@ run_profile() {
   IMAGE_PNG="$workspace/proof.png"
   IMAGE_TXT="$workspace/image.txt"
   SESSION_ID="e2e-tools-${profile}"
-<<<<<<< HEAD
-  SESSION_JSONL="/root/.moltbot-${profile}/agents/main/sessions/${SESSION_ID}.jsonl"
-=======
   SESSION_JSONL="/root/.openclaw-${profile}/agents/main/sessions/${SESSION_ID}.jsonl"
->>>>>>> upstream/main
 
   PROOF_VALUE="$(node -e 'console.log(require("node:crypto").randomBytes(16).toString("hex"))')"
   echo -n "$PROOF_VALUE" >"$PROOF_TXT"
@@ -552,11 +511,7 @@ run_profile() {
   sleep 1
   if [[ ! -f "$SESSION_JSONL" ]]; then
     echo "ERROR: missing session transcript ($profile): $SESSION_JSONL" >&2
-<<<<<<< HEAD
-    ls -la "/root/.moltbot-${profile}/agents/main/sessions" >&2 || true
-=======
     ls -la "/root/.openclaw-${profile}/agents/main/sessions" >&2 || true
->>>>>>> upstream/main
     exit 1
   fi
   assert_session_used_tools "$SESSION_JSONL" read write exec image

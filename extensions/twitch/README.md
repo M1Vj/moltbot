@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# @moltbot/twitch
-=======
 # @openclaw/twitch
->>>>>>> upstream/main
 
 Twitch channel plugin for OpenClaw.
 
@@ -15,11 +11,7 @@ openclaw plugins install ./extensions/twitch
 ## Install (npm)
 
 ```bash
-<<<<<<< HEAD
-clawdbot plugins install @moltbot/twitch
-=======
 openclaw plugins install @openclaw/twitch
->>>>>>> upstream/main
 ```
 
 Onboarding: select Twitch and confirm the install prompt to fetch the plugin automatically.

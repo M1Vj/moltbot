@@ -591,7 +591,9 @@ export async function runTui(opts: TuiOptions) {
     void (async () => {
       await refreshAgents();
       updateHeader();
-      await loadHistory();
+      if (!historyLoaded) {
+        await loadHistory();
+      }
       setConnectionStatus(reconnected ? "gateway reconnected" : "gateway connected", 4000);
       tui.requestRender();
       if (!autoMessageSent && autoMessage) {
@@ -606,7 +608,6 @@ export async function runTui(opts: TuiOptions) {
   client.onDisconnected = (reason) => {
     isConnected = false;
     wasDisconnected = true;
-    historyLoaded = false;
     const reasonLabel = reason?.trim() ? reason.trim() : "closed";
     setConnectionStatus(`gateway disconnected: ${reasonLabel}`, 5000);
     setActivityStatus("idle");

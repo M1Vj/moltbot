@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# @moltbot/zalo
-=======
 # @openclaw/zalo
->>>>>>> upstream/main
 
 Zalo channel plugin for OpenClaw (Bot API).
 
@@ -15,11 +11,7 @@ openclaw plugins install ./extensions/zalo
 ## Install (npm)
 
 ```bash
-<<<<<<< HEAD
-clawdbot plugins install @moltbot/zalo
-=======
 openclaw plugins install @openclaw/zalo
->>>>>>> upstream/main
 ```
 
 Onboarding: select Zalo and confirm the install prompt to fetch the plugin automatically.

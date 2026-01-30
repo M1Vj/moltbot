@@ -1,23 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-<<<<<<< HEAD
-INSTALL_URL="${MOLTBOT_INSTALL_URL:-https://molt.bot/install.sh}"
-DEFAULT_PACKAGE="moltbot"
-if [[ -z "${MOLTBOT_INSTALL_PACKAGE:-}" && "$INSTALL_URL" == *"clawd.bot"* ]]; then
-  DEFAULT_PACKAGE="clawdbot"
-fi
-PACKAGE_NAME="${MOLTBOT_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
-if [[ "$PACKAGE_NAME" == "moltbot" ]]; then
-  ALT_PACKAGE_NAME="clawdbot"
-else
-  ALT_PACKAGE_NAME="moltbot"
-fi
-=======
 INSTALL_URL="${OPENCLAW_INSTALL_URL:-https://openclaw.bot/install.sh}"
 DEFAULT_PACKAGE="openclaw"
 PACKAGE_NAME="${OPENCLAW_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
->>>>>>> upstream/main
 
 echo "==> Pre-flight: ensure git absent"
 if command -v git >/dev/null; then
@@ -34,11 +20,7 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 echo "==> Verify git installed"
 command -v git >/dev/null
 
-<<<<<<< HEAD
-EXPECTED_VERSION="${MOLTBOT_INSTALL_EXPECT_VERSION:-}"
-=======
 EXPECTED_VERSION="${OPENCLAW_INSTALL_EXPECT_VERSION:-}"
->>>>>>> upstream/main
 if [[ -n "$EXPECTED_VERSION" ]]; then
   LATEST_VERSION="$EXPECTED_VERSION"
 else

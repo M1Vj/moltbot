@@ -9,10 +9,16 @@ export class ChatLog extends Container {
   private streamingRuns = new Map<string, AssistantMessageComponent>();
   private toolsExpanded = false;
 
-  clearAll() {
+  clearAll(opts?: { keepStreaming?: boolean }) {
     this.clear();
     this.toolById.clear();
-    this.streamingRuns.clear();
+    if (opts?.keepStreaming) {
+      for (const component of this.streamingRuns.values()) {
+        this.addChild(component);
+      }
+    } else {
+      this.streamingRuns.clear();
+    }
   }
 
   addSystem(text: string) {

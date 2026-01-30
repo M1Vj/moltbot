@@ -14,11 +14,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_CREDS="$HOME/.claude/.credentials.json"
-<<<<<<< HEAD
-STATE_FILE="$HOME/.moltbot/auth-monitor-state"
-=======
 STATE_FILE="$HOME/.openclaw/auth-monitor-state"
->>>>>>> upstream/main
 
 # Configuration
 WARN_HOURS="${WARN_HOURS:-2}"

@@ -13,15 +13,9 @@ docker run --rm -t "$IMAGE_NAME" bash -lc '
 
   home_dir=$(mktemp -d "/tmp/openclaw-plugins-e2e.XXXXXX")
   export HOME="$home_dir"
-<<<<<<< HEAD
-  mkdir -p "$HOME/.moltbot/extensions"
-
-  cat > "$HOME/.moltbot/extensions/demo-plugin.js" <<'"'"'JS'"'"'
-=======
   mkdir -p "$HOME/.openclaw/extensions"
 
   cat > "$HOME/.openclaw/extensions/demo-plugin.js" <<'"'"'JS'"'"'
->>>>>>> upstream/main
 module.exports = {
   id: "demo-plugin",
   name: "Demo Plugin",

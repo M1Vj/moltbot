@@ -25,19 +25,11 @@ echo "Starting gateway container..."
 	docker run --rm -d \
 	  --name "$GW_NAME" \
 	  --network "$NET_NAME" \
-<<<<<<< HEAD
-	  -e "MOLTBOT_GATEWAY_TOKEN=$TOKEN" \
-	  -e "MOLTBOT_SKIP_CHANNELS=1" \
-	  -e "MOLTBOT_SKIP_GMAIL_WATCHER=1" \
-	  -e "MOLTBOT_SKIP_CRON=1" \
-	  -e "MOLTBOT_SKIP_CANVAS_HOST=1" \
-=======
 	  -e "OPENCLAW_GATEWAY_TOKEN=$TOKEN" \
 	  -e "OPENCLAW_SKIP_CHANNELS=1" \
 	  -e "OPENCLAW_SKIP_GMAIL_WATCHER=1" \
 	  -e "OPENCLAW_SKIP_CRON=1" \
 	  -e "OPENCLAW_SKIP_CANVAS_HOST=1" \
->>>>>>> upstream/main
 	  "$IMAGE_NAME" \
   bash -lc "node dist/index.js gateway --port $PORT --bind lan --allow-unconfigured > /tmp/gateway-net-e2e.log 2>&1"
 

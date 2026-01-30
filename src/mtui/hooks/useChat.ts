@@ -47,7 +47,7 @@ export const useChat = (initialSessionKey: string) => {
     const assembler = new TuiStreamAssembler();
 
     gateway.onEvent = (evt) => {
-      if (evt.event === "chat.event") {
+      if (evt.event === "chat") {
         const payload = evt.payload as ChatEvent;
         if (payload.sessionKey !== sessionKey) return;
 
@@ -58,15 +58,17 @@ export const useChat = (initialSessionKey: string) => {
 
           setMessages((prev) => {
             const last = prev[prev.length - 1];
-            if (last && last.id === payload.runId) {
-              return [
-                ...prev.slice(0, -1),
-                {
-                  ...last,
-                  content: content || last.content,
-                  thinking: thinking || last.thinking,
-                },
-              ];
+            if (last && (last.id === payload.runId || last.role === "user")) {
+              const targetIdx = prev.findIndex((m) => m.id === payload.runId);
+              if (targetIdx !== -1) {
+                const next = [...prev];
+                next[targetIdx] = {
+                  ...next[targetIdx],
+                  content: content || next[targetIdx].content,
+                  thinking: thinking || next[targetIdx].thinking,
+                };
+                return next;
+              }
             }
             return [
               ...prev,
@@ -85,17 +87,16 @@ export const useChat = (initialSessionKey: string) => {
           const content = extractContentFromMessage(payload.message);
 
           setMessages((prev) => {
-            const last = prev[prev.length - 1];
-            if (last && last.id === payload.runId) {
-              return [
-                ...prev.slice(0, -1),
-                {
-                  ...last,
-                  content: content || last.content,
-                  thinking: thinking || last.thinking,
-                  isFinal: true,
-                },
-              ];
+            const targetIdx = prev.findIndex((m) => m.id === payload.runId);
+            if (targetIdx !== -1) {
+              const next = [...prev];
+              next[targetIdx] = {
+                ...next[targetIdx],
+                content: content || next[targetIdx].content,
+                thinking: thinking || next[targetIdx].thinking,
+                isFinal: true,
+              };
+              return next;
             }
             return [
               ...prev,
@@ -114,7 +115,7 @@ export const useChat = (initialSessionKey: string) => {
           setStatus("error");
           void refreshSessionInfo();
         }
-      } else if (evt.event === "agent.event") {
+      } else if (evt.event === "agent") {
         const payload = evt.payload as AgentEvent;
         if (payload.stream === "tool") {
           const data = payload.data as any;

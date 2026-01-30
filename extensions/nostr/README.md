@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# @moltbot/nostr
-=======
 # @openclaw/nostr
->>>>>>> upstream/main
 
 Nostr DM channel plugin for OpenClaw using NIP-04 encrypted direct messages.
 
@@ -17,11 +13,7 @@ This extension adds Nostr as a messaging channel to OpenClaw. It enables your bo
 ## Installation
 
 ```bash
-<<<<<<< HEAD
-clawdbot plugins install @moltbot/nostr
-=======
 openclaw plugins install @openclaw/nostr
->>>>>>> upstream/main
 ```
 
 ## Quick Setup

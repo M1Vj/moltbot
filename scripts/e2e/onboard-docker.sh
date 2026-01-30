@@ -280,15 +280,9 @@ TRASH
       --skip-health
 
     # Assert config + workspace scaffolding.
-<<<<<<< HEAD
-    workspace_dir="$HOME/clawd"
-    config_path="$HOME/.moltbot/moltbot.json"
-    sessions_dir="$HOME/.moltbot/agents/main/sessions"
-=======
     workspace_dir="$HOME/openclaw"
     config_path="$HOME/.openclaw/openclaw.json"
     sessions_dir="$HOME/.openclaw/agents/main/sessions"
->>>>>>> upstream/main
 
     assert_file "$config_path"
     assert_dir "$sessions_dir"
@@ -358,11 +352,7 @@ NODE
       --skip-skills \
       --skip-health
 
-<<<<<<< HEAD
-    config_path="$HOME/.moltbot/moltbot.json"
-=======
     config_path="$HOME/.openclaw/openclaw.json"
->>>>>>> upstream/main
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'
@@ -396,15 +386,9 @@ NODE
     local home_dir
     home_dir="$(make_home reset-config)"
     export HOME="$home_dir"
-<<<<<<< HEAD
-    mkdir -p "$HOME/.moltbot"
-    # Seed a remote config to exercise reset path.
-    cat > "$HOME/.moltbot/moltbot.json" <<'"'"'JSON'"'"'
-=======
     mkdir -p "$HOME/.openclaw"
     # Seed a remote config to exercise reset path.
     cat > "$HOME/.openclaw/openclaw.json" <<'"'"'JSON'"'"'
->>>>>>> upstream/main
 {
   "agents": { "defaults": { "workspace": "/root/old" } },
   "gateway": {
@@ -426,11 +410,7 @@ JSON
       --skip-ui \
       --skip-health
 
-<<<<<<< HEAD
-    config_path="$HOME/.moltbot/moltbot.json"
-=======
     config_path="$HOME/.openclaw/openclaw.json"
->>>>>>> upstream/main
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'
@@ -463,11 +443,7 @@ NODE
     # Channels-only configure flow.
     run_wizard_cmd channels "$home_dir" "node dist/index.js configure --section channels" send_channels_flow
 
-<<<<<<< HEAD
-    config_path="$HOME/.moltbot/moltbot.json"
-=======
     config_path="$HOME/.openclaw/openclaw.json"
->>>>>>> upstream/main
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'
@@ -505,15 +481,9 @@ NODE
     local home_dir
     home_dir="$(make_home skills)"
     export HOME="$home_dir"
-<<<<<<< HEAD
-    mkdir -p "$HOME/.moltbot"
-    # Seed skills config to ensure it survives the wizard.
-    cat > "$HOME/.moltbot/moltbot.json" <<'"'"'JSON'"'"'
-=======
     mkdir -p "$HOME/.openclaw"
     # Seed skills config to ensure it survives the wizard.
     cat > "$HOME/.openclaw/openclaw.json" <<'"'"'JSON'"'"'
->>>>>>> upstream/main
 {
   "skills": {
     "allowBundled": ["__none__"],
@@ -524,11 +494,7 @@ JSON
 
     run_wizard_cmd skills "$home_dir" "node dist/index.js configure --section skills" send_skills_flow
 
-<<<<<<< HEAD
-    config_path="$HOME/.moltbot/moltbot.json"
-=======
     config_path="$HOME/.openclaw/openclaw.json"
->>>>>>> upstream/main
     assert_file "$config_path"
 
     CONFIG_PATH="$config_path" node --input-type=module - <<'"'"'NODE'"'"'

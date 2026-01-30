@@ -3,20 +3,7 @@
 Docs: https://docs.openclaw.ai
 
 ## 2026.1.29
-<<<<<<< HEAD
-Status: beta.
-
-### Highlights
-- CLI: add modern TUI (mtui) using React and Ink. (#4419) Thanks @M1Vj.
-- Rebrand: rename the npm package/CLI to `moltbot`, keep a `moltbot` compatibility shim, move extensions to the `@moltbot/*` scope, and update bot.molt bundle IDs/labels/logging subsystems. Thanks @thewilloftheshadow.
-- New channels/plugins: Twitch plugin; Google Chat (beta) with Workspace Add-on events + typing indicator. (#1612, #1635) Thanks @tyler6204, @iHildy.
-- Security hardening: gateway auth defaults required, hook token query-param deprecation, Windows ACL audits, mDNS minimal discovery, and SSH target option injection fix. (#4001, #2016, #1957, #1882, #2200)
-- WebChat: image paste + image-only sends; keep sub-agent announce replies visible. (#1925, #1977)
-- Tooling: per-sender group tool policies + tools.alsoAllow additive allowlist. (#1757, #1762)
-- Memory Search: allow extra paths for memory indexing. (#3600) Thanks @kira-ariaki.
-=======
 Status: stable.
->>>>>>> upstream/main
 
 ### Changes
 - Rebrand: rename the npm package/CLI to `openclaw`, add a `openclaw` compatibility shim, and move extensions to the `@openclaw/*` scope.

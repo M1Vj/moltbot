@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# @moltbot/voice-call
-=======
 # @openclaw/voice-call
->>>>>>> upstream/main
 
 Official Voice Call plugin for **OpenClaw**.
 
@@ -20,11 +16,7 @@ Plugin system: `https://docs.openclaw.ai/plugin`
 ### Option A: install via OpenClaw (recommended)
 
 ```bash
-<<<<<<< HEAD
-clawdbot plugins install @moltbot/voice-call
-=======
 openclaw plugins install @openclaw/voice-call
->>>>>>> upstream/main
 ```
 
 Restart the Gateway afterwards.
