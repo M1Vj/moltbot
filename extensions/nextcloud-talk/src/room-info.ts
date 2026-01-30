@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import type { RuntimeEnv } from "moltbot/plugin-sdk";
+import type { RuntimeEnv } from "openclaw/plugin-sdk";
 
 import type { ResolvedNextcloudTalkAccount } from "./accounts.js";
 

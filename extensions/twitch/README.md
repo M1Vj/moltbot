@@ -1,17 +1,25 @@
+<<<<<<< HEAD
 # @moltbot/twitch
+=======
+# @openclaw/twitch
+>>>>>>> upstream/main
 
-Twitch channel plugin for Clawdbot.
+Twitch channel plugin for OpenClaw.
 
 ## Install (local checkout)
 
 ```bash
-clawdbot plugins install ./extensions/twitch
+openclaw plugins install ./extensions/twitch
 ```
 
 ## Install (npm)
 
 ```bash
+<<<<<<< HEAD
 clawdbot plugins install @moltbot/twitch
+=======
+openclaw plugins install @openclaw/twitch
+>>>>>>> upstream/main
 ```
 
 Onboarding: select Twitch and confirm the install prompt to fetch the plugin automatically.
@@ -27,7 +35,7 @@ Minimal config (simplified single-account):
   channels: {
     twitch: {
       enabled: true,
-      username: "clawdbot",
+      username: "openclaw",
       accessToken: "oauth:abc123...", // OAuth Access Token (add oauth: prefix)
       clientId: "xyz789...", // Client ID from Token Generator
       channel: "vevisk", // Channel to join (required)
@@ -52,13 +60,13 @@ Multi-account config (advanced):
       enabled: true,
       accounts: {
         default: {
-          username: "clawdbot",
+          username: "openclaw",
           accessToken: "oauth:abc123...",
           clientId: "xyz789...",
           channel: "vevisk",
         },
         channel2: {
-          username: "clawdbot",
+          username: "openclaw",
           accessToken: "oauth:def456...",
           clientId: "uvw012...",
           channel: "secondchannel",
@@ -80,7 +88,7 @@ Multi-account config (advanced):
 
 ## Full documentation
 
-See https://docs.molt.bot/channels/twitch for:
+See https://docs.openclaw.ai/channels/twitch for:
 
 - Token refresh setup
 - Access control patterns

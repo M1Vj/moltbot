@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+<<<<<<< HEAD
 INSTALL_URL="${MOLTBOT_INSTALL_URL:-https://molt.bot/install.sh}"
 SMOKE_PREVIOUS_VERSION="${MOLTBOT_INSTALL_SMOKE_PREVIOUS:-}"
 SKIP_PREVIOUS="${MOLTBOT_INSTALL_SMOKE_SKIP_PREVIOUS:-0}"
@@ -14,6 +15,13 @@ if [[ "$PACKAGE_NAME" == "moltbot" ]]; then
 else
   ALT_PACKAGE_NAME="moltbot"
 fi
+=======
+INSTALL_URL="${OPENCLAW_INSTALL_URL:-https://openclaw.bot/install.sh}"
+SMOKE_PREVIOUS_VERSION="${OPENCLAW_INSTALL_SMOKE_PREVIOUS:-}"
+SKIP_PREVIOUS="${OPENCLAW_INSTALL_SMOKE_SKIP_PREVIOUS:-0}"
+DEFAULT_PACKAGE="openclaw"
+PACKAGE_NAME="${OPENCLAW_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
+>>>>>>> upstream/main
 
 echo "==> Resolve npm versions"
 LATEST_VERSION="$(npm view "$PACKAGE_NAME" version)"
@@ -49,7 +57,11 @@ fi
 echo "package=$PACKAGE_NAME latest=$LATEST_VERSION previous=$PREVIOUS_VERSION"
 
 if [[ "$SKIP_PREVIOUS" == "1" ]]; then
+<<<<<<< HEAD
   echo "==> Skip preinstall previous (MOLTBOT_INSTALL_SMOKE_SKIP_PREVIOUS=1)"
+=======
+  echo "==> Skip preinstall previous (OPENCLAW_INSTALL_SMOKE_SKIP_PREVIOUS=1)"
+>>>>>>> upstream/main
 else
   echo "==> Preinstall previous (forces installer upgrade path)"
   npm install -g "${PACKAGE_NAME}@${PREVIOUS_VERSION}"
@@ -61,17 +73,16 @@ curl -fsSL "$INSTALL_URL" | bash
 echo "==> Verify installed version"
 CLI_NAME="$PACKAGE_NAME"
 if ! command -v "$CLI_NAME" >/dev/null 2>&1; then
-  if command -v "$ALT_PACKAGE_NAME" >/dev/null 2>&1; then
-    CLI_NAME="$ALT_PACKAGE_NAME"
-    LATEST_VERSION="$(npm view "$CLI_NAME" version)"
-    echo "==> Detected alternate CLI: $CLI_NAME"
-  else
-    echo "ERROR: neither $PACKAGE_NAME nor $ALT_PACKAGE_NAME is on PATH" >&2
-    exit 1
-  fi
+  echo "ERROR: $PACKAGE_NAME is not on PATH" >&2
+  exit 1
 fi
+<<<<<<< HEAD
 if [[ -n "${MOLTBOT_INSTALL_LATEST_OUT:-}" ]]; then
   printf "%s" "$LATEST_VERSION" > "$MOLTBOT_INSTALL_LATEST_OUT"
+=======
+if [[ -n "${OPENCLAW_INSTALL_LATEST_OUT:-}" ]]; then
+  printf "%s" "$LATEST_VERSION" > "${OPENCLAW_INSTALL_LATEST_OUT:-}"
+>>>>>>> upstream/main
 fi
 INSTALLED_VERSION="$("$CLI_NAME" --version 2>/dev/null | head -n 1 | tr -d '\r')"
 echo "cli=$CLI_NAME installed=$INSTALLED_VERSION expected=$LATEST_VERSION"

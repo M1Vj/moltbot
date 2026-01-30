@@ -9,7 +9,7 @@ import {
   extensionForMime,
   extractOriginalFilename,
   getFileExtension,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 /**
  * Detect MIME type from URL extension or data URL.

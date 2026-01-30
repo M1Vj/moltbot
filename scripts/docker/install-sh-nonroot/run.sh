@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+<<<<<<< HEAD
 INSTALL_URL="${MOLTBOT_INSTALL_URL:-https://molt.bot/install.sh}"
 DEFAULT_PACKAGE="moltbot"
 if [[ -z "${MOLTBOT_INSTALL_PACKAGE:-}" && "$INSTALL_URL" == *"clawd.bot"* ]]; then
@@ -12,6 +13,11 @@ if [[ "$PACKAGE_NAME" == "moltbot" ]]; then
 else
   ALT_PACKAGE_NAME="moltbot"
 fi
+=======
+INSTALL_URL="${OPENCLAW_INSTALL_URL:-https://openclaw.bot/install.sh}"
+DEFAULT_PACKAGE="openclaw"
+PACKAGE_NAME="${OPENCLAW_INSTALL_PACKAGE:-$DEFAULT_PACKAGE}"
+>>>>>>> upstream/main
 
 echo "==> Pre-flight: ensure git absent"
 if command -v git >/dev/null; then
@@ -28,7 +34,11 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 echo "==> Verify git installed"
 command -v git >/dev/null
 
+<<<<<<< HEAD
 EXPECTED_VERSION="${MOLTBOT_INSTALL_EXPECT_VERSION:-}"
+=======
+EXPECTED_VERSION="${OPENCLAW_INSTALL_EXPECT_VERSION:-}"
+>>>>>>> upstream/main
 if [[ -n "$EXPECTED_VERSION" ]]; then
   LATEST_VERSION="$EXPECTED_VERSION"
 else
@@ -36,24 +46,13 @@ else
 fi
 CLI_NAME="$PACKAGE_NAME"
 CMD_PATH="$(command -v "$CLI_NAME" || true)"
-if [[ -z "$CMD_PATH" ]]; then
-  CLI_NAME="$ALT_PACKAGE_NAME"
-  CMD_PATH="$(command -v "$CLI_NAME" || true)"
-fi
 if [[ -z "$CMD_PATH" && -x "$HOME/.npm-global/bin/$PACKAGE_NAME" ]]; then
   CLI_NAME="$PACKAGE_NAME"
   CMD_PATH="$HOME/.npm-global/bin/$PACKAGE_NAME"
 fi
-if [[ -z "$CMD_PATH" && -x "$HOME/.npm-global/bin/$ALT_PACKAGE_NAME" ]]; then
-  CLI_NAME="$ALT_PACKAGE_NAME"
-  CMD_PATH="$HOME/.npm-global/bin/$ALT_PACKAGE_NAME"
-fi
 if [[ -z "$CMD_PATH" ]]; then
-  echo "Neither $PACKAGE_NAME nor $ALT_PACKAGE_NAME is on PATH" >&2
+  echo "$PACKAGE_NAME is not on PATH" >&2
   exit 1
-fi
-if [[ -z "$EXPECTED_VERSION" && "$CLI_NAME" != "$PACKAGE_NAME" ]]; then
-  LATEST_VERSION="$(npm view "$CLI_NAME" version)"
 fi
 echo "==> Verify CLI installed: $CLI_NAME"
 INSTALLED_VERSION="$("$CMD_PATH" --version 2>/dev/null | head -n 1 | tr -d '\r')"

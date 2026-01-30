@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
 
 import { loginQwenPortalOAuth } from "./oauth.js";
 

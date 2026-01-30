@@ -1,5 +1,5 @@
-import type { MoltbotPluginApi } from "moltbot/plugin-sdk";
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
 
 import { whatsappPlugin } from "./src/channel.js";
 import { setWhatsAppRuntime } from "./src/runtime.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "WhatsApp",
   description: "WhatsApp channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltbotPluginApi) {
+  register(api: OpenClawPluginApi) {
     setWhatsAppRuntime(api.runtime);
     api.registerChannel({ plugin: whatsappPlugin });
   },

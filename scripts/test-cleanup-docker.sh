@@ -2,7 +2,11 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+<<<<<<< HEAD
 IMAGE_NAME="${MOLTBOT_CLEANUP_SMOKE_IMAGE:-moltbot-cleanup-smoke:local}"
+=======
+IMAGE_NAME="${OPENCLAW_CLEANUP_SMOKE_IMAGE:-${CLAWDBOT_CLEANUP_SMOKE_IMAGE:-openclaw-cleanup-smoke:local}}"
+>>>>>>> upstream/main
 
 echo "==> Build image: $IMAGE_NAME"
 docker build \

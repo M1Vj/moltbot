@@ -8,7 +8,7 @@ import {
   resolveMentionGating,
   formatAllowlistMatchMeta,
   type HistoryEntry,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import {
   buildMSTeamsAttachmentPlaceholder,

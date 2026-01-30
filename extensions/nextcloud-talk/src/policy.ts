@@ -1,11 +1,11 @@
-import type { AllowlistMatch, ChannelGroupContext, GroupPolicy, GroupToolPolicyConfig } from "moltbot/plugin-sdk";
+import type { AllowlistMatch, ChannelGroupContext, GroupPolicy, GroupToolPolicyConfig } from "openclaw/plugin-sdk";
 import {
   buildChannelKeyCandidates,
   normalizeChannelSlug,
   resolveChannelEntryMatchWithFallback,
   resolveMentionGatingWithBypass,
   resolveNestedAllowlistDecision,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import type { NextcloudTalkRoomConfig } from "./types.js";
 

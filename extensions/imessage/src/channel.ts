@@ -21,7 +21,7 @@ import {
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
   type ResolvedIMessageAccount,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import { getIMessageRuntime } from "./runtime.js";
 

@@ -21,7 +21,7 @@ import {
   type ChannelMessageActionAdapter,
   type ChannelPlugin,
   type ResolvedSignalAccount,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import { getSignalRuntime } from "./runtime.js";
 

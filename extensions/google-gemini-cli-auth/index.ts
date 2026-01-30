@@ -1,4 +1,4 @@
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
 
 import { loginGeminiCliOAuth } from "./oauth.js";
 
@@ -6,8 +6,8 @@ const PROVIDER_ID = "google-gemini-cli";
 const PROVIDER_LABEL = "Gemini CLI OAuth";
 const DEFAULT_MODEL = "google-gemini-cli/gemini-3-pro-preview";
 const ENV_VARS = [
-  "MOLTBOT_GEMINI_OAUTH_CLIENT_ID",
-  "MOLTBOT_GEMINI_OAUTH_CLIENT_SECRET",
+  "OPENCLAW_GEMINI_OAUTH_CLIENT_ID",
+  "OPENCLAW_GEMINI_OAUTH_CLIENT_SECRET",
   "GEMINI_CLI_OAUTH_CLIENT_ID",
   "GEMINI_CLI_OAUTH_CLIENT_SECRET",
 ];

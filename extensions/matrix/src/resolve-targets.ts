@@ -3,7 +3,7 @@ import type {
   ChannelResolveKind,
   ChannelResolveResult,
   RuntimeEnv,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import {
   listMatrixDirectoryGroupsLive,

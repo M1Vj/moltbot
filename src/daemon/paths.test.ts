@@ -7,31 +7,31 @@ import { resolveGatewayStateDir } from "./paths.js";
 describe("resolveGatewayStateDir", () => {
   it("uses the default state dir when no overrides are set", () => {
     const env = { HOME: "/Users/test" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".moltbot"));
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".openclaw"));
   });
 
   it("appends the profile suffix when set", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "rescue" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".moltbot-rescue"));
+    const env = { HOME: "/Users/test", OPENCLAW_PROFILE: "rescue" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".openclaw-rescue"));
   });
 
   it("treats default profiles as the base state dir", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_PROFILE: "Default" };
-    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".moltbot"));
+    const env = { HOME: "/Users/test", OPENCLAW_PROFILE: "Default" };
+    expect(resolveGatewayStateDir(env)).toBe(path.join("/Users/test", ".openclaw"));
   });
 
-  it("uses MOLTBOT_STATE_DIR when provided", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_STATE_DIR: "/var/lib/moltbot" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/moltbot"));
+  it("uses OPENCLAW_STATE_DIR when provided", () => {
+    const env = { HOME: "/Users/test", OPENCLAW_STATE_DIR: "/var/lib/openclaw" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/var/lib/openclaw"));
   });
 
-  it("expands ~ in MOLTBOT_STATE_DIR", () => {
-    const env = { HOME: "/Users/test", MOLTBOT_STATE_DIR: "~/moltbot-state" };
-    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/moltbot-state"));
+  it("expands ~ in OPENCLAW_STATE_DIR", () => {
+    const env = { HOME: "/Users/test", OPENCLAW_STATE_DIR: "~/openclaw-state" };
+    expect(resolveGatewayStateDir(env)).toBe(path.resolve("/Users/test/openclaw-state"));
   });
 
   it("preserves Windows absolute paths without HOME", () => {
-    const env = { MOLTBOT_STATE_DIR: "C:\\State\\moltbot" };
-    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\moltbot");
+    const env = { OPENCLAW_STATE_DIR: "C:\\State\\openclaw" };
+    expect(resolveGatewayStateDir(env)).toBe("C:\\State\\openclaw");
   });
 });

@@ -1,5 +1,5 @@
-import type { MoltbotPluginApi } from "moltbot/plugin-sdk";
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
 
 import { signalPlugin } from "./src/channel.js";
 import { setSignalRuntime } from "./src/runtime.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "Signal",
   description: "Signal channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltbotPluginApi) {
+  register(api: OpenClawPluginApi) {
     setSignalRuntime(api.runtime);
     api.registerChannel({ plugin: signalPlugin });
   },

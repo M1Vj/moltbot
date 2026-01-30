@@ -4,7 +4,7 @@ import {
   formatLocationText,
   toLocationContext,
   type NormalizedLocation,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 import { EventType } from "./types.js";
 
 export type MatrixLocationPayload = {

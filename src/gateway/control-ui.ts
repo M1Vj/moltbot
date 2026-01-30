@@ -3,7 +3,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import type { MoltbotConfig } from "../config/config.js";
+import type { OpenClawConfig } from "../config/config.js";
 import { DEFAULT_ASSISTANT_IDENTITY, resolveAssistantIdentity } from "./assistant-identity.js";
 import {
   buildControlUiAvatarUrl,
@@ -16,7 +16,7 @@ const ROOT_PREFIX = "/";
 
 export type ControlUiRequestOptions = {
   basePath?: string;
-  config?: MoltbotConfig;
+  config?: OpenClawConfig;
   agentId?: string;
 };
 
@@ -176,16 +176,16 @@ function injectControlUiConfig(html: string, opts: ControlUiInjectionOpts): stri
   const { basePath, assistantName, assistantAvatar } = opts;
   const script =
     `<script>` +
-    `window.__MOLTBOT_CONTROL_UI_BASE_PATH__=${JSON.stringify(basePath)};` +
-    `window.__MOLTBOT_ASSISTANT_NAME__=${JSON.stringify(
+    `window.__OPENCLAW_CONTROL_UI_BASE_PATH__=${JSON.stringify(basePath)};` +
+    `window.__OPENCLAW_ASSISTANT_NAME__=${JSON.stringify(
       assistantName ?? DEFAULT_ASSISTANT_IDENTITY.name,
     )};` +
-    `window.__MOLTBOT_ASSISTANT_AVATAR__=${JSON.stringify(
+    `window.__OPENCLAW_ASSISTANT_AVATAR__=${JSON.stringify(
       assistantAvatar ?? DEFAULT_ASSISTANT_IDENTITY.avatar,
     )};` +
     `</script>`;
   // Check if already injected
-  if (html.includes("__MOLTBOT_ASSISTANT_NAME__")) return html;
+  if (html.includes("__OPENCLAW_ASSISTANT_NAME__")) return html;
   const headClose = html.indexOf("</head>");
   if (headClose !== -1) {
     return `${html.slice(0, headClose)}${script}${html.slice(headClose)}`;
@@ -195,7 +195,7 @@ function injectControlUiConfig(html: string, opts: ControlUiInjectionOpts): stri
 
 interface ServeIndexHtmlOpts {
   basePath: string;
-  config?: MoltbotConfig;
+  config?: OpenClawConfig;
   agentId?: string;
 }
 

@@ -1,5 +1,5 @@
-import type { MoltbotPluginApi } from "moltbot/plugin-sdk";
-import { emptyPluginConfigSchema } from "moltbot/plugin-sdk";
+import type { OpenClawPluginApi } from "openclaw/plugin-sdk";
+import { emptyPluginConfigSchema } from "openclaw/plugin-sdk";
 
 import { slackPlugin } from "./src/channel.js";
 import { setSlackRuntime } from "./src/runtime.js";
@@ -9,7 +9,7 @@ const plugin = {
   name: "Slack",
   description: "Slack channel plugin",
   configSchema: emptyPluginConfigSchema(),
-  register(api: MoltbotPluginApi) {
+  register(api: OpenClawPluginApi) {
     setSlackRuntime(api.runtime);
     api.registerChannel({ plugin: slackPlugin });
   },

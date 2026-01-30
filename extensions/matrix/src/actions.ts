@@ -6,7 +6,7 @@ import {
   type ChannelMessageActionContext,
   type ChannelMessageActionName,
   type ChannelToolSend,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 import { resolveMatrixAccount } from "./matrix/accounts.js";
 import { handleMatrixAction } from "./tool-actions.js";
 import type { CoreConfig } from "./types.js";

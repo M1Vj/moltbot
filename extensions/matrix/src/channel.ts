@@ -8,7 +8,7 @@ import {
   PAIRING_APPROVED_MESSAGE,
   setAccountEnabledInConfigSection,
   type ChannelPlugin,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import { matrixMessageActions } from "./actions.js";
 import { MatrixConfigSchema } from "./config-schema.js";

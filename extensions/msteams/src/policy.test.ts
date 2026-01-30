@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type { MSTeamsConfig } from "moltbot/plugin-sdk";
+import type { MSTeamsConfig } from "openclaw/plugin-sdk";
 import {
   isMSTeamsGroupAllowed,
   resolveMSTeamsReplyPolicy,

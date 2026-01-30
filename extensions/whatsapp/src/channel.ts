@@ -28,7 +28,7 @@ import {
   type ChannelMessageActionName,
   type ChannelPlugin,
   type ResolvedWhatsAppAccount,
-} from "moltbot/plugin-sdk";
+} from "openclaw/plugin-sdk";
 
 import { getWhatsAppRuntime } from "./runtime.js";
 
