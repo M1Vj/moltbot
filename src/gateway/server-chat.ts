@@ -127,7 +127,7 @@ export type AgentEventHandlerOptions = {
 
 export function createAgentEventHandler({
   broadcast,
-  nodeSendToSession,
+  nodeSendToSession: _nodeSendToSession,
   agentRunSeq,
   chatRunState,
   resolveSessionKeyForRun,
