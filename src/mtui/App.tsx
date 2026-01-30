@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Box, Text, useInput, useApp } from "ink";
+import React, { useState, useEffect, useMemo } from "react";
+import { Box, Text, useInput, useApp, useStdout } from "ink";
 import Spinner from "ink-spinner";
 import { GatewayProvider, useGateway } from "./context/GatewayContext.js";
 import { SettingsProvider, useSettings } from "./context/SettingsContext.js";
@@ -10,6 +10,7 @@ import { InputBar } from "./components/InputBar.js";
 import { Selector } from "./components/Selector.js";
 import type { TuiOptions } from "../tui/tui-types.js";
 import { formatContextUsageLine } from "../tui/tui-formatters.js";
+import { LOBSTER_PALETTE } from "../terminal/palette.js";
 
 type AppProps = {
   options: TuiOptions;
@@ -17,6 +18,7 @@ type AppProps = {
 
 const ChatApp: React.FC<{ options: TuiOptions }> = ({ options }) => {
   const { exit } = useApp();
+  const { stdout } = useStdout();
   const gateway = useGateway();
   const { showThinking, setShowThinking } = useSettings();
   const [connectionStatus, setConnectionStatus] = useState<
@@ -41,6 +43,15 @@ const ChatApp: React.FC<{ options: TuiOptions }> = ({ options }) => {
     addMessage,
     refreshSessionInfo,
   );
+
+  const [scrollTop, setScrollTop] = useState(0);
+  const [isAutoScroll, setIsAutoScroll] = useState(true);
+
+  useEffect(() => {
+    if (isAutoScroll) {
+      setScrollTop(Math.max(0, messages.length - 1));
+    }
+  }, [messages.length, isAutoScroll]);
 
   useEffect(() => {
     gateway.onConnected = () => {
@@ -80,6 +91,7 @@ const ChatApp: React.FC<{ options: TuiOptions }> = ({ options }) => {
     } else {
       await sendMessage(value);
     }
+    setIsAutoScroll(true);
   };
 
   useInput((input, key) => {
@@ -91,6 +103,14 @@ const ChatApp: React.FC<{ options: TuiOptions }> = ({ options }) => {
     }
     if (key.ctrl && input === "t") {
       setShowThinking(!showThinking);
+    }
+    if (key.pageUp) {
+      setScrollTop((prev) => Math.max(0, prev - 5));
+      setIsAutoScroll(false);
+    }
+    if (key.pageDown) {
+      setScrollTop((prev) => Math.min(messages.length - 1, prev + 5));
+      if (scrollTop >= messages.length - 6) setIsAutoScroll(true);
     }
   });
 
@@ -104,85 +124,103 @@ const ChatApp: React.FC<{ options: TuiOptions }> = ({ options }) => {
         : null,
   });
 
+  const visibleMessages = useMemo(() => {
+    const windowSize = Math.max(5, stdout.rows - 12);
+    const start = Math.max(0, Math.min(scrollTop, messages.length - windowSize));
+    return messages.slice(start, start + windowSize);
+  }, [messages, scrollTop, stdout.rows]);
+
   return (
-    <Box flexDirection="column" padding={1} minHeight={20}>
-      <Box borderStyle="round" borderColor="cyan" paddingX={1} marginBottom={1}>
+    <Box flexDirection="column" padding={1} width="100%" height={stdout.rows}>
+      <Box borderStyle="round" borderColor={LOBSTER_PALETTE.accent} paddingX={1} marginBottom={0}>
         <Text bold color="white">
-          Moltbot MTUI
+          🦞 MOLTBOT MTUI
         </Text>
         <Box flexGrow={1} />
         <Box paddingX={2}>
-          <Text dimColor>{sessionInfo.model || "no model"}</Text>
+          <Text color={LOBSTER_PALETTE.muted}>{sessionInfo.model || "no model"}</Text>
         </Box>
         <Text
           color={
             connectionStatus === "connected"
-              ? "green"
+              ? LOBSTER_PALETTE.success
               : connectionStatus === "connecting"
-                ? "yellow"
-                : "red"
+                ? LOBSTER_PALETTE.warn
+                : LOBSTER_PALETTE.error
           }
         >
           {connectionStatus === "connecting" && <Spinner type="dots" />} {connectionStatus}
         </Text>
       </Box>
 
-      {overlay ? (
-        <Box flexGrow={1} justifyContent="center" alignItems="center">
-          <Selector
-            title={`Select ${overlay.type}`}
-            items={overlay.items}
-            onSelect={async (item) => {
-              if (overlay.type === "model") {
-                await gateway.patchSession({ key: sessionKey, model: item.value });
-                addMessage({
-                  id: Math.random().toString(),
-                  role: "system",
-                  content: `Model set to ${item.value}`,
-                });
-                await refreshSessionInfo();
-              }
-              setOverlay(null);
-            }}
-            onCancel={() => setOverlay(null)}
-          />
-        </Box>
-      ) : (
-        <Box flexGrow={1} flexDirection="column">
-          <Box flexDirection="column">
-            {messages.slice(-10).map((msg, i) => (
-              <MessageView key={i} message={msg} />
-            ))}
+      <Box flexGrow={1} flexDirection="column" marginY={1}>
+        {overlay ? (
+          <Box flexGrow={1} justifyContent="center" alignItems="center">
+            <Selector
+              title={`Select ${overlay.type}`}
+              items={overlay.items}
+              onSelect={async (item) => {
+                if (overlay.type === "model") {
+                  await gateway.patchSession({ key: sessionKey, model: item.value });
+                  addMessage({
+                    id: Math.random().toString(),
+                    role: "system",
+                    content: `Model set to ${item.value}`,
+                  });
+                  await refreshSessionInfo();
+                }
+                setOverlay(null);
+              }}
+              onCancel={() => setOverlay(null)}
+            />
           </Box>
-        </Box>
-      )}
+        ) : (
+          <Box flexDirection="column" flexGrow={1}>
+            {messages.length === 0 && connectionStatus === "connected" && (
+              <Box flexGrow={1} justifyContent="center" alignItems="center">
+                <Text color={LOBSTER_PALETTE.muted}>No messages. Start a conversation!</Text>
+              </Box>
+            )}
+            {visibleMessages.map((msg, i) => (
+              <MessageView key={msg.id || i} message={msg} />
+            ))}
+            {!isAutoScroll && (
+              <Box justifyContent="center">
+                <Text color={LOBSTER_PALETTE.warn}>[ Scrolling Up - Press PageDown to end ]</Text>
+              </Box>
+            )}
+          </Box>
+        )}
+      </Box>
 
       {status === "running" && !overlay && (
-        <Box paddingX={1} marginBottom={1}>
-          <Text color="yellow">
-            <Spinner type="dots" /> Assistant is thinking...
+        <Box paddingX={1} marginBottom={0}>
+          <Text color={LOBSTER_PALETTE.warn}>
+            <Spinner type="dots" /> assistant is thinking...
           </Text>
         </Box>
       )}
 
       {error && !overlay && (
-        <Box paddingX={1} marginBottom={1}>
-          <Text color="red">Error: {error}</Text>
+        <Box paddingX={1} marginBottom={0}>
+          <Text color={LOBSTER_PALETTE.error}>error: {error}</Text>
         </Box>
       )}
 
       {!overlay && (
-        <>
-          <Box paddingX={1} marginBottom={1}>
-            <Text dimColor>{usageLine}</Text>
+        <Box flexDirection="column">
+          <Box paddingX={1}>
+            <Text color={LOBSTER_PALETTE.muted}>{usageLine}</Text>
           </Box>
 
-          <InputBar onSubmit={handleSubmit} status={status} />
+          <InputBar onSubmit={handleSubmit} status={status} model={sessionInfo.model} />
 
-          <Box paddingX={1} marginTop={1}>
-            <Text dimColor>Ctrl+C exit | Ctrl+T think | /model | /reset | !ls</Text>
+          <Box paddingX={1} marginTop={0}>
+            <Text color={LOBSTER_PALETTE.muted}>
+              Ctrl+C exit | Ctrl+T think | PgUp/PgDn scroll | /model | /reset | !bash
+            </Text>
           </Box>
-        </>
+        </Box>
       )}
     </Box>
   );

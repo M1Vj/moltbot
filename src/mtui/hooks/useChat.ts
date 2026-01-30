@@ -25,8 +25,7 @@ export type ToolCall = {
 export const useChat = (initialSessionKey: string) => {
   const gateway = useGateway();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [sessionKey, setSessionKey] = useState(initialSessionKey);
-  const [activeRunId, setActiveRunId] = useState<string | null>(null);
+  const [sessionKey] = useState(initialSessionKey);
   const [status, setStatus] = useState<"idle" | "running" | "streaming" | "error">("idle");
   const [sessionInfo, setSessionInfo] = useState<SessionInfo>({});
 
@@ -64,8 +63,8 @@ export const useChat = (initialSessionKey: string) => {
                 ...prev.slice(0, -1),
                 {
                   ...last,
-                  content: last.content + (content || ""),
-                  thinking: last.thinking + (thinking || ""),
+                  content: content || last.content,
+                  thinking: thinking || last.thinking,
                 },
               ];
             }
@@ -109,12 +108,10 @@ export const useChat = (initialSessionKey: string) => {
               },
             ];
           });
-          setActiveRunId(null);
           setStatus("idle");
           void refreshSessionInfo();
         } else if (payload.state === "error") {
           setStatus("error");
-          setActiveRunId(null);
           void refreshSessionInfo();
         }
       } else if (evt.event === "agent.event") {
@@ -184,8 +181,7 @@ export const useChat = (initialSessionKey: string) => {
     async (text: string) => {
       addMessage({ id: Math.random().toString(), role: "user", content: text });
       setStatus("running");
-      const { runId } = await gateway.sendChat({ sessionKey, message: text });
-      setActiveRunId(runId);
+      await gateway.sendChat({ sessionKey, message: text });
     },
     [gateway, sessionKey, addMessage],
   );
@@ -197,9 +193,7 @@ export const useChat = (initialSessionKey: string) => {
     addMessage,
     sessionInfo,
     sessionKey,
-    setSessionKey,
     refreshSessionInfo,
     loadHistory,
-    activeRunId,
   };
 };

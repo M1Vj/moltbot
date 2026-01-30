@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Text, useInput } from "ink";
 import SelectInput from "ink-select-input";
+import { LOBSTER_PALETTE } from "../../terminal/palette.js";
 
 type Item = {
   label: string;
@@ -36,14 +37,41 @@ export const Selector: React.FC<SelectorProps> = ({ title, items, onSelect, onCa
   });
 
   return (
-    <Box flexDirection="column" borderStyle="round" borderColor="blue" paddingX={1}>
-      <Text bold>{title}</Text>
+    <Box
+      flexDirection="column"
+      borderStyle="round"
+      borderColor={LOBSTER_PALETTE.accent}
+      paddingX={1}
+      minWidth={40}
+    >
+      <Text bold color={LOBSTER_PALETTE.accent}>
+        {title.toUpperCase()}
+      </Text>
       <Box marginY={1}>
-        <Text>Search: {query}</Text>
+        <Text>Search: </Text>
+        <Text color={LOBSTER_PALETTE.info}>{query}</Text>
+        <Text color={LOBSTER_PALETTE.muted}>_</Text>
       </Box>
-      <SelectInput items={filteredItems} onSelect={onSelect} />
-      <Box marginTop={1}>
-        <Text dimColor>Esc to cancel</Text>
+      <Box height={10} flexDirection="column">
+        {filteredItems.length === 0 ? (
+          <Text color={LOBSTER_PALETTE.muted}>No matches found.</Text>
+        ) : (
+          <SelectInput
+            items={filteredItems.slice(0, 10)}
+            onSelect={onSelect}
+            indicatorComponent={({ isSelected }) => (
+              <Text color={isSelected ? LOBSTER_PALETTE.accent : undefined}>
+                {isSelected ? " › " : "   "}
+              </Text>
+            )}
+            itemComponent={({ label, isSelected }) => (
+              <Text color={isSelected ? LOBSTER_PALETTE.accentBright : undefined}>{label}</Text>
+            )}
+          />
+        )}
+      </Box>
+      <Box marginTop={1} borderStyle="single" borderColor="gray" paddingX={1}>
+        <Text dimColor>↑↓ select | Enter confirm | Esc cancel</Text>
       </Box>
     </Box>
   );
