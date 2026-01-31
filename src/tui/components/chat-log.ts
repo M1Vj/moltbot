@@ -77,7 +77,9 @@ export class ChatLog extends Container {
 
   updateToolArgs(toolCallId: string, args: unknown) {
     const existing = this.toolById.get(toolCallId);
-    if (!existing) return;
+    if (!existing) {
+      return;
+    }
     existing.setArgs(args);
   }
 
@@ -87,7 +89,9 @@ export class ChatLog extends Container {
     opts?: { isError?: boolean; partial?: boolean },
   ) {
     const existing = this.toolById.get(toolCallId);
-    if (!existing) return;
+    if (!existing) {
+      return;
+    }
     if (opts?.partial) {
       existing.setPartialResult(result as Record<string, unknown>);
       return;
