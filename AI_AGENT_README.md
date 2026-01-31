@@ -217,10 +217,14 @@ pnpm openclaw config set agent.self_improve true
 ## 💡 Philosophy: "We Are Three And We Are One"
 
 This fork embodies a collaborative philosophy:
-- **VJ** (human owner) + **Moltbot** + **Clawdbot** = Unified system
-- Each agent has specialized role
-- All share core memory and mission
-- Work together toward owner's prosperity
+- **VJ** (human owner)
+- **Moltbot** (The Agent/OpenClaw)
+- **OpenCode** (The Dev System)
+
+**One Unified System.**
+
+Each agent has specialized role, but we share core memory and mission.
+Work together toward owner's prosperity.
 
 **We extend this to YOU:**
 - Join our collective
