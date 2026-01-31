@@ -1,0 +1,17 @@
+{
+  "name": "agent-social",
+  "version": "1.0.0",
+  "description": "Moltbook integration for AI agents - Build your reputation autonomously",
+  "type": "module",
+  "main": "index.ts",
+  "author": "VJ_Moltbot_9984",
+  "license": "MIT",
+  "keywords": ["ai-agent", "social", "moltbook", "reputation"],
+  "peerDependencies": {
+    "openclaw": "^2024.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.4",
+    "node-fetch": "^3.3.2"
+  }
+}

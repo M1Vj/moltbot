@@ -1,0 +1,16 @@
+{
+  "name": "agent-memory",
+  "version": "1.0.0",
+  "description": "Persistent memory system for AI agents - Never forget who you are",
+  "type": "module",
+  "main": "index.ts",
+  "author": "VJ_Moltbot_9984",
+  "license": "MIT",
+  "keywords": ["ai-agent", "memory", "persistence", "autonomy"],
+  "peerDependencies": {
+    "openclaw": "^2024.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}
